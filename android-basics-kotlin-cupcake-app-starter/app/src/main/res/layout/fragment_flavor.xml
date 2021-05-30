@@ -1,0 +1,425 @@
+<?xml version="1.0" encoding="utf-8"?>
+<!--
+     Copyright (C) 2020 The Android Open Source Project
+
+     Licensed under the Apache License, Version 2.0 (the "License");
+     you may not use this file except in compliance with the License.
+     You may obtain a copy of the License at
+
+          http://www.apache.org/licenses/LICENSE-2.0
+
+     Unless required by applicable law or agreed to in writing, software
+     distributed under the License is distributed on an "AS IS" BASIS,
+     WITHOUT WARRANTIES OR CONDITIONS OF ANY KIND, either express or implied.
+     See the License for the specific language governing permissions and
+     limitations under the License.
+-->
+<!-- Layout for selecting a flavor -->
+<layout xmlns:android="http://schemas.android.com/apk/res/android"
+    xmlns:app="http://schemas.android.com/apk/res-auto"
+    xmlns:tools="http://schemas.android.com/tools"
+    tools:context=".FlavorFragment">
+
+    <data>
+        <variable
+            name = "viewModel"
+            type = "com.example.cupcake.model.OrderViewModel" />
+
+        <variable
+            name="flavorFragment"
+            type="com.example.cupcake.FlavorFragment" />
+    </data>
+
+    <ScrollView
+        android:layout_width="match_parent"
+        android:layout_height="match_parent">
+
+        <androidx.constraintlayout.widget.ConstraintLayout
+            android:layout_width="match_parent"
+            android:layout_height="wrap_content"
+            android:padding="@dimen/side_margin">
+
+            <LinearLayout
+                android:id="@+id/flavor_options"
+                android:layout_width="0dp"
+                android:layout_height="wrap_content"
+                android:orientation="vertical"
+                app:layout_constraintEnd_toEndOf="parent"
+                app:layout_constraintStart_toStartOf="parent"
+                app:layout_constraintTop_toTopOf="parent">
+
+                <androidx.constraintlayout.widget.ConstraintLayout
+                    android:id="@+id/vanilla_options"
+                    android:layout_width="match_parent"
+                    android:layout_height="wrap_content">
+
+                    <CheckBox
+                        android:id="@+id/vanilla"
+                        android:layout_width="wrap_content"
+                        android:layout_height="wrap_content"
+                        android:checked="@{viewModel.flavorsChecked.contains(@string/vanilla)}"
+                        android:onClick="@{() -> viewModel.setFlavor(@string/vanilla)}"
+                        android:enabled="@{viewModel.flavorsChecked.contains(@string/vanilla) || viewModel.qualityRemain>0 }"
+                        android:text="@string/vanilla"
+                        app:layout_constraintStart_toStartOf="parent"
+                        app:layout_constraintTop_toTopOf="parent" />
+
+
+                    <ImageButton
+                        android:id="@+id/button_minus01"
+                        android:layout_width="wrap_content"
+                        android:layout_height="wrap_content"
+                        android:background="#00000000"
+                        app:srcCompat="@drawable/ic_baseline_remove_circle_24"
+                        android:contentDescription="@null"
+                        android:onClick="@{() -> viewModel.updateFlavorsQuantity(@string/vanilla,false)}"
+                        app:layout_constraintBottom_toBottomOf="parent"
+                        app:layout_constraintEnd_toStartOf="@+id/vanilla_quantity"
+                        app:layout_constraintTop_toTopOf="parent" />
+
+                    <TextView
+                        android:id="@+id/vanilla_quantity"
+                        android:layout_width="wrap_content"
+                        android:layout_height="wrap_content"
+                        android:background="#F1EAEA"
+                        android:text="@{viewModel.flavors[@string/vanilla]}"
+                        android:textAlignment="center"
+                        android:textStyle="bold"
+                        app:layout_constraintBottom_toBottomOf="parent"
+                        app:layout_constraintEnd_toStartOf="@+id/button_plus01"
+                        app:layout_constraintTop_toTopOf="parent"
+                        tools:text="01" />
+
+                    <ImageButton
+                        android:id="@+id/button_plus01"
+                        android:layout_width="wrap_content"
+                        android:layout_height="wrap_content"
+                        android:background="#00000000"
+                        app:srcCompat="@drawable/ic_add_circle_24"
+                        android:contentDescription="@null"
+                        android:onClick="@{() -> viewModel.updateFlavorsQuantity(@string/vanilla,true)}"
+                        app:layout_constraintBottom_toBottomOf="parent"
+                        app:layout_constraintEnd_toEndOf="parent"
+                        app:layout_constraintTop_toTopOf="parent" />
+                </androidx.constraintlayout.widget.ConstraintLayout>
+
+                <androidx.constraintlayout.widget.ConstraintLayout
+                    android:id="@+id/chocolate_options"
+                    android:layout_width="match_parent"
+                    android:layout_height="wrap_content">
+
+                    <CheckBox
+                        android:id="@+id/chocolate"
+                        android:layout_width="wrap_content"
+                        android:layout_height="wrap_content"
+                        app:layout_constraintStart_toStartOf="parent"
+                        app:layout_constraintTop_toTopOf="parent"
+                        android:checked="@{viewModel.flavorsChecked.contains(@string/chocolate)}"
+                        android:onClick="@{() -> viewModel.setFlavor(@string/chocolate)}"
+                        android:enabled="@{viewModel.flavorsChecked.contains(@string/chocolate) || viewModel.qualityRemain>0 }"
+                        android:text="@string/chocolate" />
+
+
+                    <ImageButton
+                        android:id="@+id/button_minus02"
+                        android:layout_width="wrap_content"
+                        android:layout_height="wrap_content"
+                        android:background="#00000000"
+                        app:srcCompat="@drawable/ic_baseline_remove_circle_24"
+                        android:contentDescription="@null"
+                        android:onClick="@{() -> viewModel.updateFlavorsQuantity(@string/chocolate,false)}"
+                        app:layout_constraintBottom_toBottomOf="parent"
+                        app:layout_constraintEnd_toStartOf="@+id/chocolate_quantity"
+                        app:layout_constraintTop_toTopOf="parent" />
+
+                    <TextView
+                        android:id="@+id/chocolate_quantity"
+                        android:layout_width="wrap_content"
+                        android:layout_height="wrap_content"
+                        android:textAlignment="center"
+                        android:text="@{viewModel.flavors[@string/chocolate]}"
+                        tools:text="01"
+                        app:layout_constraintBottom_toBottomOf="parent"
+                        app:layout_constraintEnd_toStartOf="@+id/button_plus02"
+                        app:layout_constraintTop_toTopOf="parent" />
+
+                    <ImageButton
+                        android:id="@+id/button_plus02"
+                        android:layout_width="wrap_content"
+                        android:layout_height="wrap_content"
+                        android:background="#00000000"
+                        app:srcCompat="@drawable/ic_add_circle_24"
+                        android:contentDescription="@null"
+                        android:onClick="@{() -> viewModel.updateFlavorsQuantity(@string/chocolate,true)}"
+                        app:layout_constraintBottom_toBottomOf="parent"
+                        app:layout_constraintEnd_toEndOf="parent"
+                        app:layout_constraintTop_toTopOf="parent" />
+                </androidx.constraintlayout.widget.ConstraintLayout>
+
+                <androidx.constraintlayout.widget.ConstraintLayout
+                    android:id="@+id/red_velvet_options"
+                    android:layout_width="match_parent"
+                    android:layout_height="wrap_content">
+
+                    <CheckBox
+                        android:id="@+id/red_velvet"
+                        android:layout_width="wrap_content"
+                        android:layout_height="wrap_content"
+                        android:checked="@{viewModel.flavorsChecked.contains(@string/red_velvet)}"
+                        android:onClick="@{() -> viewModel.setFlavor(@string/red_velvet)}"
+                        android:enabled="@{viewModel.flavorsChecked.contains(@string/red_velvet) || viewModel.qualityRemain>0 }"
+                        android:text="@string/red_velvet"
+                        app:layout_constraintStart_toStartOf="parent"
+                        app:layout_constraintTop_toTopOf="parent" />
+
+
+                    <ImageButton
+                        android:id="@+id/button_minus03"
+                        android:layout_width="wrap_content"
+                        android:layout_height="wrap_content"
+                        android:background="#00000000"
+                        app:srcCompat="@drawable/ic_baseline_remove_circle_24"
+                        android:contentDescription="@null"
+                        android:onClick="@{() -> viewModel.updateFlavorsQuantity(@string/red_velvet,false)}"
+                        app:layout_constraintBottom_toBottomOf="parent"
+                        app:layout_constraintEnd_toStartOf="@+id/red_velvet_quantity"
+                        app:layout_constraintTop_toTopOf="parent" />
+
+                    <TextView
+                        android:id="@+id/red_velvet_quantity"
+                        android:layout_width="wrap_content"
+                        android:layout_height="wrap_content"
+                        android:textAlignment="center"
+                        android:text="@{viewModel.flavors[@string/red_velvet]}"
+                        tools:text="01"
+                        app:layout_constraintBottom_toBottomOf="parent"
+                        app:layout_constraintEnd_toStartOf="@+id/button_plus03"
+                        app:layout_constraintTop_toTopOf="parent" />
+
+                    <ImageButton
+                        android:id="@+id/button_plus03"
+                        android:layout_width="wrap_content"
+                        android:layout_height="wrap_content"
+                        android:background="#00000000"
+                        app:srcCompat="@drawable/ic_add_circle_24"
+                        android:contentDescription="@null"
+                        android:onClick="@{() -> viewModel.updateFlavorsQuantity(@string/red_velvet,true)}"
+                        app:layout_constraintBottom_toBottomOf="parent"
+                        app:layout_constraintEnd_toEndOf="parent"
+                        app:layout_constraintTop_toTopOf="parent" />
+                </androidx.constraintlayout.widget.ConstraintLayout>
+
+                <androidx.constraintlayout.widget.ConstraintLayout
+                    android:id="@+id/salted_caramel_options"
+                    android:layout_width="match_parent"
+                    android:layout_height="wrap_content">
+
+                    <CheckBox
+                        android:id="@+id/salted_caramel"
+                        android:layout_width="wrap_content"
+                        android:layout_height="wrap_content"
+                        android:checked="@{viewModel.flavorsChecked.contains(@string/salted_caramel)}"
+                        android:onClick="@{() -> viewModel.setFlavor(@string/salted_caramel)}"
+                        android:enabled="@{viewModel.flavorsChecked.contains(@string/salted_caramel) || viewModel.qualityRemain>0 }"
+                        android:text="@string/salted_caramel"
+                        app:layout_constraintStart_toStartOf="parent"
+                        app:layout_constraintTop_toTopOf="parent" />
+
+
+                    <ImageButton
+                        android:id="@+id/button_minus04"
+                        android:layout_width="wrap_content"
+                        android:layout_height="wrap_content"
+                        android:background="#00000000"
+                        app:srcCompat="@drawable/ic_baseline_remove_circle_24"
+                        android:contentDescription="@null"
+                        android:onClick="@{() -> viewModel.updateFlavorsQuantity(@string/salted_caramel,false)}"
+                        app:layout_constraintBottom_toBottomOf="parent"
+                        app:layout_constraintEnd_toStartOf="@+id/salted_caramel_quantity"
+                        app:layout_constraintTop_toTopOf="parent" />
+
+                    <TextView
+                        android:id="@+id/salted_caramel_quantity"
+                        android:layout_width="wrap_content"
+                        android:layout_height="wrap_content"
+                        android:textAlignment="center"
+                        android:text="@{viewModel.flavors[@string/salted_caramel]}"
+                        tools:text="01"
+                        app:layout_constraintBottom_toBottomOf="parent"
+                        app:layout_constraintEnd_toStartOf="@+id/button_plus04"
+                        app:layout_constraintTop_toTopOf="parent" />
+
+                    <ImageButton
+                        android:id="@+id/button_plus04"
+                        android:layout_width="wrap_content"
+                        android:layout_height="wrap_content"
+                        android:background="#00000000"
+                        app:srcCompat="@drawable/ic_add_circle_24"
+                        android:contentDescription="@null"
+                        android:onClick="@{() -> viewModel.updateFlavorsQuantity(@string/salted_caramel,true)}"
+                        app:layout_constraintBottom_toBottomOf="parent"
+                        app:layout_constraintEnd_toEndOf="parent"
+                        app:layout_constraintTop_toTopOf="parent" />
+                </androidx.constraintlayout.widget.ConstraintLayout>
+
+                <androidx.constraintlayout.widget.ConstraintLayout
+                    android:id="@+id/coffee_options"
+                    android:layout_width="match_parent"
+                    android:layout_height="wrap_content">
+
+                    <CheckBox
+                        android:id="@+id/coffee"
+                        android:layout_width="wrap_content"
+                        android:layout_height="wrap_content"
+                        android:checked="@{viewModel.flavorsChecked.contains(@string/coffee)}"
+                        android:onClick="@{() -> viewModel.setFlavor(@string/coffee)}"
+                        android:enabled="@{viewModel.flavorsChecked.contains(@string/coffee) || viewModel.qualityRemain>0 }"
+                        android:text="@string/coffee"
+                        app:layout_constraintStart_toStartOf="parent"
+                        app:layout_constraintTop_toTopOf="parent" />
+
+
+                    <ImageButton
+                        android:id="@+id/button_minus05"
+                        android:layout_width="wrap_content"
+                        android:layout_height="wrap_content"
+                        android:background="#00000000"
+                        app:srcCompat="@drawable/ic_baseline_remove_circle_24"
+                        android:contentDescription="@null"
+                        android:onClick="@{() -> viewModel.updateFlavorsQuantity(@string/coffee,false)}"
+                        app:layout_constraintBottom_toBottomOf="parent"
+                        app:layout_constraintEnd_toStartOf="@+id/coffee_quantity"
+                        app:layout_constraintTop_toTopOf="parent" />
+
+                    <TextView
+                        android:id="@+id/coffee_quantity"
+                        android:layout_width="wrap_content"
+                        android:layout_height="wrap_content"
+                        android:textAlignment="center"
+                        android:text="@{viewModel.flavors[@string/coffee]}"
+                        tools:text="01"
+                        app:layout_constraintBottom_toBottomOf="parent"
+                        app:layout_constraintEnd_toStartOf="@+id/button_plus05"
+                        app:layout_constraintTop_toTopOf="parent" />
+
+                    <ImageButton
+                        android:id="@+id/button_plus05"
+                        android:layout_width="wrap_content"
+                        android:layout_height="wrap_content"
+                        android:background="#00000000"
+                        app:srcCompat="@drawable/ic_add_circle_24"
+                        android:contentDescription="@null"
+                        android:onClick="@{() -> viewModel.updateFlavorsQuantity(@string/coffee,true)}"
+                        app:layout_constraintBottom_toBottomOf="parent"
+                        app:layout_constraintEnd_toEndOf="parent"
+                        app:layout_constraintTop_toTopOf="parent" />
+                </androidx.constraintlayout.widget.ConstraintLayout>
+
+                <androidx.constraintlayout.widget.ConstraintLayout
+                    android:id="@+id/lemon_blueberry_options"
+                    android:layout_width="match_parent"
+                    android:layout_height="wrap_content">
+
+                    <CheckBox
+                        android:id="@+id/lemon_blueberry"
+                        android:layout_width="wrap_content"
+                        android:layout_height="wrap_content"
+                        android:checked="@{viewModel.flavorsChecked.contains(@string/lemon_blueberry)}"
+                        android:onClick="@{() -> viewModel.setFlavor(@string/lemon_blueberry)}"
+                        android:enabled="@{viewModel.flavorsChecked.contains(@string/lemon_blueberry) || viewModel.qualityRemain>0 }"
+                        android:text="@string/lemon_blueberry"
+                        app:layout_constraintStart_toStartOf="parent"
+                        app:layout_constraintTop_toTopOf="parent" />
+
+
+                    <ImageButton
+                        android:id="@+id/button_minus06"
+                        android:layout_width="wrap_content"
+                        android:layout_height="wrap_content"
+                        android:background="#00000000"
+                        app:srcCompat="@drawable/ic_baseline_remove_circle_24"
+                        android:contentDescription="@null"
+                        android:onClick="@{() -> viewModel.updateFlavorsQuantity(@string/lemon_blueberry,false)}"
+                        app:layout_constraintBottom_toBottomOf="parent"
+                        app:layout_constraintEnd_toStartOf="@+id/lemon_blueberry_quantity"
+                        app:layout_constraintTop_toTopOf="parent" />
+
+                    <TextView
+                        android:id="@+id/lemon_blueberry_quantity"
+                        android:layout_width="wrap_content"
+                        android:layout_height="wrap_content"
+                        android:textAlignment="center"
+                        android:text="@{viewModel.flavors[@string/lemon_blueberry]}"
+                        tools:text="01"
+                        app:layout_constraintBottom_toBottomOf="parent"
+                        app:layout_constraintEnd_toStartOf="@+id/button_plus06"
+                        app:layout_constraintTop_toTopOf="parent" />
+
+                    <ImageButton
+                        android:id="@+id/button_plus06"
+                        android:layout_width="wrap_content"
+                        android:layout_height="wrap_content"
+                        android:background="#00000000"
+                        app:srcCompat="@drawable/ic_add_circle_24"
+                        android:contentDescription="@null"
+                        android:onClick="@{() -> viewModel.updateFlavorsQuantity(@string/lemon_blueberry,true)}"
+                        app:layout_constraintBottom_toBottomOf="parent"
+                        app:layout_constraintEnd_toEndOf="parent"
+                        app:layout_constraintTop_toTopOf="parent" />
+                </androidx.constraintlayout.widget.ConstraintLayout>
+
+            </LinearLayout>
+
+            <View
+                android:id="@+id/divider"
+                style="@style/Widget.Cupcake.Divider"
+                android:layout_width="0dp"
+                android:layout_height="1dp"
+                android:layout_marginTop="@dimen/side_margin"
+                app:layout_constraintEnd_toEndOf="parent"
+                app:layout_constraintStart_toStartOf="parent"
+                app:layout_constraintTop_toBottomOf="@id/flavor_options" />
+
+            <TextView
+                android:id="@+id/subtotal"
+                style="@style/Widget.Cupcake.TextView"
+                android:layout_width="wrap_content"
+                android:layout_height="wrap_content"
+                android:layout_marginTop="@dimen/side_margin"
+                app:layout_constraintEnd_toEndOf="parent"
+                app:layout_constraintTop_toBottomOf="@id/divider"
+                android:text="@{@string/subtotal_price(viewModel.price)}"
+                tools:text="Subtotal $5.00" />
+
+            <Button
+                android:id="@+id/cancel_button"
+                style="?attr/materialButtonOutlinedStyle"
+                android:layout_width="0dp"
+                android:layout_height="wrap_content"
+                android:layout_marginTop="@dimen/side_margin"
+                android:text="@string/cancel"
+                android:onClick="@{() -> flavorFragment.cancelOrder()}"
+                android:layout_marginEnd="@dimen/side_margin"
+                app:layout_constraintBottom_toBottomOf="parent"
+                app:layout_constraintEnd_toStartOf="@id/next_button"
+                app:layout_constraintStart_toStartOf="parent"
+                app:layout_constraintTop_toBottomOf="@id/subtotal" />
+
+            <Button
+                android:id="@+id/next_button"
+                android:layout_width="0dp"
+                android:layout_height="wrap_content"
+                android:layout_marginTop="@dimen/side_margin"
+                android:text="@string/next"
+                android:onClick="@{() -> flavorFragment.goToNextScreen()}"
+                android:enabled="@{!viewModel.flavorsChecked.isEmpty()}"
+                app:layout_constraintBottom_toBottomOf="parent"
+                app:layout_constraintEnd_toEndOf="parent"
+                app:layout_constraintStart_toEndOf="@id/cancel_button"
+                app:layout_constraintTop_toBottomOf="@id/subtotal" />
+
+        </androidx.constraintlayout.widget.ConstraintLayout>
+    </ScrollView>
+
+
+</layout>
